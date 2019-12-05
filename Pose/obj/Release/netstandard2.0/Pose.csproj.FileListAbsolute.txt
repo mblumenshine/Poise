@@ -1,0 +1,9 @@
+C:\pose-master\src\Pose\bin\Release\netstandard2.0\Pose.deps.json
+C:\pose-master\src\Pose\bin\Release\netstandard2.0\Pose.dll
+C:\pose-master\src\Pose\bin\Release\netstandard2.0\Pose.pdb
+C:\pose-master\src\Pose\obj\Release\netstandard2.0\Pose.csprojAssemblyReference.cache
+C:\pose-master\src\Pose\obj\Release\netstandard2.0\Pose.csproj.CoreCompileInputs.cache
+C:\pose-master\src\Pose\obj\Release\netstandard2.0\Pose.AssemblyInfoInputs.cache
+C:\pose-master\src\Pose\obj\Release\netstandard2.0\Pose.AssemblyInfo.cs
+C:\pose-master\src\Pose\obj\Release\netstandard2.0\Pose.dll
+C:\pose-master\src\Pose\obj\Release\netstandard2.0\Pose.pdb

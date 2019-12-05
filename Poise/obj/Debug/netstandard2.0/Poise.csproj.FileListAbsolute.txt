@@ -1,0 +1,14 @@
+c:\users\mblum\source\repos\Poise\Poise\bin\Debug\netstandard2.0\Poise.deps.json
+c:\users\mblum\source\repos\Poise\Poise\bin\Debug\netstandard2.0\Poise.dll
+c:\users\mblum\source\repos\Poise\Poise\bin\Debug\netstandard2.0\Poise.pdb
+c:\users\mblum\source\repos\Poise\Poise\bin\Debug\netstandard2.0\Pose.dll
+c:\users\mblum\source\repos\Poise\Poise\bin\Debug\netstandard2.0\Pose.pdb
+c:\users\mblum\source\repos\Poise\Poise\obj\Debug\netstandard2.0\Poise.csprojAssemblyReference.cache
+c:\users\mblum\source\repos\Poise\Poise\obj\Debug\netstandard2.0\Poise.csproj.CoreCompileInputs.cache
+c:\users\mblum\source\repos\Poise\Poise\obj\Debug\netstandard2.0\Poise.AssemblyInfoInputs.cache
+c:\users\mblum\source\repos\Poise\Poise\obj\Debug\netstandard2.0\Poise.AssemblyInfo.cs
+c:\users\mblum\source\repos\Poise\Poise\obj\Debug\netstandard2.0\Poise.csproj.CopyComplete
+c:\users\mblum\source\repos\Poise\Poise\obj\Debug\netstandard2.0\Poise.dll
+c:\users\mblum\source\repos\Poise\Poise\obj\Debug\netstandard2.0\Poise.pdb
+c:\users\mblum\source\repos\Poise\Poise\bin\Debug\netstandard2.0\TestClasses.dll
+c:\users\mblum\source\repos\Poise\Poise\bin\Debug\netstandard2.0\TestClasses.pdb

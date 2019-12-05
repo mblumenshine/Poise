@@ -1,0 +1,9 @@
+c:\Users\mblum\source\repos\Poise\TestClasses\bin\Debug\netstandard2.0\TestClasses.deps.json
+c:\Users\mblum\source\repos\Poise\TestClasses\bin\Debug\netstandard2.0\TestClasses.dll
+c:\Users\mblum\source\repos\Poise\TestClasses\bin\Debug\netstandard2.0\TestClasses.pdb
+c:\Users\mblum\source\repos\Poise\TestClasses\obj\Debug\netstandard2.0\TestClasses.csprojAssemblyReference.cache
+c:\Users\mblum\source\repos\Poise\TestClasses\obj\Debug\netstandard2.0\TestClasses.csproj.CoreCompileInputs.cache
+c:\Users\mblum\source\repos\Poise\TestClasses\obj\Debug\netstandard2.0\TestClasses.AssemblyInfoInputs.cache
+c:\Users\mblum\source\repos\Poise\TestClasses\obj\Debug\netstandard2.0\TestClasses.AssemblyInfo.cs
+c:\Users\mblum\source\repos\Poise\TestClasses\obj\Debug\netstandard2.0\TestClasses.dll
+c:\Users\mblum\source\repos\Poise\TestClasses\obj\Debug\netstandard2.0\TestClasses.pdb
