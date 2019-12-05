@@ -12,7 +12,7 @@ namespace Poise
 {
     public class Shimmy
     {
-        private IList<ShimmyInternal> _shimmyInternals = new List<ShimmyInternal>();
+        private readonly IList<ShimmyInternal> _shimmyInternals;
 
         private Shimmy(IList<ShimmyInternal> shimmyInternals)
         {
@@ -51,23 +51,19 @@ namespace Poise
                 shimmyInternals.Add(new ShimmyInternal(property, shimCreator.CreatePropertySetShim<T>(property, type), true));
             }
 
-            Shim what = Shim.Replace(() => Is.A<ShimMe>().PublicProperty);
-            Console.WriteLine("hold on");
-
             return new Shimmy(shimmyInternals);
-
         }
 
         public Shim GetShim(string name, bool isSetter = false, params Type[] types)
         {
-            var shim = _shimmyInternals.Where(x => x.IsSetter == isSetter).FirstOrDefault(x => IsCorrectShim(x, name, types)).Shim;
+            var shim = _shimmyInternals.Where(x => x.IsSetter == isSetter).FirstOrDefault(x => IsCorrectShim(x, name, types))?.Shim;
 
             if (shim == null) throw new ShimNotFoundException();
 
             return shim;
         }
 
-        private bool IsCorrectShim(ShimmyInternal shimmyInternal, string name, params Type[] types)
+        private static bool IsCorrectShim(ShimmyInternal shimmyInternal, string name, params Type[] types)
         {
             if (shimmyInternal.Name != name) return false;
 
@@ -78,10 +74,10 @@ namespace Poise
 
         private class ShimmyInternal
         {
-            internal string Name;
-            internal IList<Type> Types = new List<Type>();
-            internal Shim Shim;
-            internal bool IsSetter = false;
+            internal readonly string Name;
+            internal readonly IList<Type> Types = new List<Type>();
+            internal readonly Shim Shim;
+            internal readonly bool IsSetter;
 
             internal ShimmyInternal(MethodInfo methodInfo, Shim shim)
             {

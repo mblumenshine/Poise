@@ -13,23 +13,16 @@ namespace PoiseTests
         [TestMethod]
         public void BasicTest()
         {
-            //var shimMe = new ShimMe();
-            //shimMe.PublicInstance();
-            //ShimMe.PublicStatic();
-            //ShimMe.PublicStaticParameters("hello");
-            var what = Shimmy.CreateShimmy<ShimMe>(typeof(ShimMe));
-           // Shim shim = Shim.Replace(() => Is.A<ShimMe>().PublicInstanceParameters("hi"));
-            var helpABrotherOut = Is.A<ShimMe>();
-            DontShimMe.TestMeThough();
-
             var test = string.Empty;
+
+            var testShimmy = Shimmy.CreateShimmy<ShimMe>(typeof(ShimMe));
+
+            var realShim = testShimmy.GetShim(nameof(ShimMe.PublicInstanceParameters), false, typeof(string), typeof(string));
+            realShim.With((ShimMe @this, string s) => "Wow, getting Shims worked right out of the box!");
 
             Poise.Poise.Run(() => {
                 test = DontShimMe.TestMeThough();
-                //test = shimMe.PublicInstance();
-                //ShimMe.PublicStatic();
-                //ShimMe.PublicStaticParameters("hello");
-            }, new List<Shimmy>() { what });
+            }, new List<Shimmy>() { testShimmy });
             
             Debug.WriteLine(test);
         }
