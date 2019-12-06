@@ -6,7 +6,6 @@ using Poise.Exceptions;
 using Poise.Interfaces;
 using Poise.ShimCreators;
 using Pose;
-using Testing.TestClasses;
 
 namespace Poise
 {
