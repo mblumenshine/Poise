@@ -1,14 +1,15 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>Michael Blumenshine</Authors>
-    <PackageId>Poise_Michael_Blumenshine</PackageId>
+    <PackageId>Poise</PackageId>
     <Description>Mocking framework for legacy code or code written without dependency injection and "coding to interfaces" in mind. Poise wraps the Pose library and allows any public (instance or static) method or property to be mocked. Much like Moq, it provides default, empty implementations for all methods in a class; instead of writing a Pose Shim for each method that's used in a workflow, you only need to write Shims for the methods that are relevant for a unit test.</Description>
     <PackageTags>poise;pose;mocking;testing;unit-test;isolation-framework;test-framework</PackageTags>
     <RepositoryType>git</RepositoryType>
     <PackageProjectUrl>https://github.com/mblumenshine/Poise</PackageProjectUrl>
     <RepositoryUrl>https://github.com/mblumenshine/Poise</RepositoryUrl>
+    <Version>1.0.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
