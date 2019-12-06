@@ -19,19 +19,16 @@ namespace Poise.ShimCreators
             //return ctorShim;
         }
 
-        public Shim CreatePropertyGetShim<T>(PropertyInfo propertyInfo, Type type)
+        public Shim CreatePropertyGetShim<T>(MethodInfo methodInfo, Type type)
         {
-            var getter = propertyInfo.GetGetMethod();
-            var returnType = getter.ReturnType;
+            var returnType = methodInfo.ReturnType;
 
-            return Shim.ReplaceAutoInstance<T>(getter, type, false).With((T @this) => GetDefault(returnType), true);
+            return Shim.ReplaceAutoInstance<T>(methodInfo, type, false).With((T @this) => GetDefault(returnType), true);
         }
 
-        public Shim CreatePropertySetShim<T>(PropertyInfo propertyInfo, Type type)
+        public Shim CreatePropertySetShim<T>(MethodInfo methodInfo, Type type)
         {
-            var setter = propertyInfo.GetSetMethod();
-
-            return Shim.ReplaceAutoInstance<T>(setter, type, true).With(delegate (T @this) {  }, true);
+            return Shim.ReplaceAutoInstance<T>(methodInfo, type, true).With(delegate (T @this) {  }, true);
         }
 
         public Shim CreatePublicInstanceShim<T>(MethodInfo methodInfo, Type type)

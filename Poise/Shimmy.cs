@@ -26,7 +26,7 @@ namespace Poise
             var staticMethods = type.GetMethods(BindingFlags.Public | BindingFlags.DeclaredOnly | BindingFlags.Static);
             var instanceMethods = type.GetMethods(BindingFlags.Public | BindingFlags.DeclaredOnly | BindingFlags.Instance);
             var properties = type.GetProperties();
-            var constructors = type.GetConstructors();
+            var constructors = type.GetConstructors(BindingFlags.Public);
             //foreach (var constructor in constructors)
             //{
             //    _shims.Add(_shimCreator.CreateConstructorShim(constructor));
@@ -36,7 +36,7 @@ namespace Poise
             {
                 shimmyInternals.Add(new ShimmyInternal(method, shimCreator.CreatePublicStaticShim(method)));
             }
-            foreach (var method in instanceMethods)
+            foreach (var method in instanceMethods)//.Where(m => !m.Name.StartsWith("get_") && !m.Name.StartsWith("set_")))
             {
                 shimmyInternals.Add(new ShimmyInternal(method, shimCreator.CreatePublicInstanceShim<T>(method, type)));
             }
@@ -44,11 +44,22 @@ namespace Poise
             {
                 shimmyInternals.Add(new ShimmyInternal(constructor, shimCreator.CreateConstructorShim<T>(constructor, type)));
             }
-            foreach (var property in properties)
-            {
-                shimmyInternals.Add(new ShimmyInternal(property, shimCreator.CreatePropertyGetShim<T>(property, type), true));
-                shimmyInternals.Add(new ShimmyInternal(property, shimCreator.CreatePropertySetShim<T>(property, type), true));
-            }
+            //foreach (var property in properties)
+            //{
+            //    var getMethod = property.GetGetMethod();
+            //    if (getMethod != null)
+            //    {
+            //        shimmyInternals.Add(new ShimmyInternal(property,
+            //            shimCreator.CreatePropertyGetShim<T>(getMethod, type), false));
+            //    }
+
+            //    var setMethod = property.GetSetMethod();
+            //    if (setMethod != null)
+            //    {
+            //        shimmyInternals.Add(new ShimmyInternal(property,
+            //            shimCreator.CreatePropertySetShim<T>(setMethod, type), true));
+            //    }
+            //}
 
             return new Shimmy(shimmyInternals);
         }

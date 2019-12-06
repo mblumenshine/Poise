@@ -10,7 +10,7 @@ namespace Poise.Interfaces
         Shim CreatePublicInstanceShim<T>(MethodInfo methodInfo, Type type);
         Shim CreatePublicStaticShim(MethodInfo methodInfo);
         Shim CreateConstructorShim<T>(ConstructorInfo constructorInfo, Type type);
-        Shim CreatePropertyGetShim<T>(PropertyInfo propertyInfo, Type type);
-        Shim CreatePropertySetShim<T>(PropertyInfo propertyInfo, Type type);
+        Shim CreatePropertyGetShim<T>(MethodInfo methodInfo, Type type);
+        Shim CreatePropertySetShim<T>(MethodInfo methodInfo, Type type);
     }
 }

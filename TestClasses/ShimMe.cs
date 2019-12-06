@@ -8,7 +8,7 @@ namespace Testing.TestClasses
         public ShimMe()
         {
             var text = "Constructor";
-            Debug.WriteLine(text);
+            //Debug.WriteLine(text);
         }
 
         public ShimMe(string parameter)
@@ -38,13 +38,13 @@ namespace Testing.TestClasses
         public static void PublicStatic()
         {
             var text = "PublicStatic";
-            Debug.WriteLine(text);
+            //Debug.WriteLine(text);
         }
 
         public static string PublicStaticParameters(string parameter)
         {
             var text = $"PublicStaticParameters: {parameter}";
-            Debug.WriteLine(text);
+            //Debug.WriteLine(text);
 
             return text;
         }
@@ -54,12 +54,12 @@ namespace Testing.TestClasses
         {
             get
             {
-                Debug.WriteLine($"Value from getter: {_privateField}");
+                //Debug.WriteLine($"Value from getter: {_privateField}");
                 return _privateField;
             }
             set
             {
-                Debug.WriteLine($"Input to setter: {value}");
+                //Debug.WriteLine($"Input to setter: {value}");
                 _privateField = value;
             }
         }
@@ -69,14 +69,16 @@ namespace Testing.TestClasses
         {
             get
             {
-                Debug.WriteLine($"Value from getter: {_privateField2}");
+                //Debug.WriteLine($"Value from getter: {_privateField2}");
                 return _privateField2;
             }
             set
             {
-                Debug.WriteLine($"Input to setter: {value}");
+                //Debug.WriteLine($"Input to setter: {value}");
                 _privateField2 = value;
             }
         }
+
+        public string PublicProperty3 => "let's see here";
     }
 }
