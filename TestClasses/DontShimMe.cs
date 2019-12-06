@@ -14,7 +14,7 @@ namespace Testing.TestClasses
             test.PublicInstance();
             var hello = test.PublicProperty2;
             //return $"This should be empty unless explicitly overriden: {test.PublicInstanceParameters("hello")} :anything before this should be empty unless overriden.";
-            return $"This should not say 5: {test.PublicProperty}. Also if this works, it means there is a severe issue with that exception handling thing";
+            return $"This should not say 5: {test.ToString()}. Also if this works, it means there is a severe issue with that exception handling thing";
             //return hello;
             //return "Dave";
         }

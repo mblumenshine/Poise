@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Pose", "Pose", "{87663968-8
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pose", "Pose\Pose.csproj", "{A25DCB53-186A-4AE2-A631-1275F149622D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoiseTestsNetFramework", "PoiseTestsNetFramework\PoiseTestsNetFramework.csproj", "{40DF7C5A-CC83-4B84-AB3C-285204A29C1C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{A25DCB53-186A-4AE2-A631-1275F149622D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A25DCB53-186A-4AE2-A631-1275F149622D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A25DCB53-186A-4AE2-A631-1275F149622D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40DF7C5A-CC83-4B84-AB3C-285204A29C1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40DF7C5A-CC83-4B84-AB3C-285204A29C1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40DF7C5A-CC83-4B84-AB3C-285204A29C1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40DF7C5A-CC83-4B84-AB3C-285204A29C1C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -45,6 +51,7 @@ Global
 		{05EF41A3-B4DF-45F5-9D31-5E1AEE5CC8DF} = {6A169AB4-2204-4545-B24E-B8FD42F16DA0}
 		{97E5FADC-8AF7-463F-B2EF-A4EA10F762E3} = {6A169AB4-2204-4545-B24E-B8FD42F16DA0}
 		{A25DCB53-186A-4AE2-A631-1275F149622D} = {87663968-847E-4D13-B450-F42B6120305C}
+		{40DF7C5A-CC83-4B84-AB3C-285204A29C1C} = {6A169AB4-2204-4545-B24E-B8FD42F16DA0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AA71B805-4343-4014-8FC9-97A0B4689DA0}

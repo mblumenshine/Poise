@@ -43,12 +43,7 @@ namespace Pose.IL
             parameterTypes.AddRange(_method.GetParameters().Select(p => p.ParameterType));
             Type returnType = _method.IsConstructor ? typeof(void) : (_method as MethodInfo).ReturnType;
 
-            DynamicMethod dynamicMethod = new DynamicMethod(
-                string.Format("dynamic_{0}_{1}", _method.DeclaringType, _method.Name),
-                returnType,
-                parameterTypes.ToArray(),
-                StubHelper.GetOwningModule(),
-                true);
+            DynamicMethod dynamicMethod = new DynamicMethod(string.Format("dynamic_{0}_{1}", _method.DeclaringType, _method.Name),returnType,parameterTypes.ToArray(),StubHelper.GetOwningModule(),true);
 
             if (_method.ToString() == "System.Resources.ResourceSet GetFirstResourceSet(System.Globalization.CultureInfo)")
             {
@@ -107,7 +102,7 @@ namespace Pose.IL
             // ifTargets = ifTargetsSecond;
             //.Where(i => !s_IgnoredOpCodes.Contains(i.OpCode))
             //.Where(i => i.OpCode.Name != "leave" && i.OpCode.Name != "leave.s")
-            ifTargets = ifTargetsSecond;
+            //ifTargets = ifTargetsSecond;
 
             foreach (Instruction instruction in ifTargets)
                 targetInstructions.TryAdd(instruction.Offset, ilGenerator.DefineLabel());
