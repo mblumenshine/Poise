@@ -26,7 +26,7 @@ namespace Poise
             var staticMethods = type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly | BindingFlags.Static);
             var instanceMethods = type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly | BindingFlags.Instance);
             var properties = type.GetProperties();
-            var constructors = type.GetConstructors(BindingFlags.Public);
+            var constructors = type.GetConstructors();
             //foreach (var constructor in constructors)
             //{
             //    _shims.Add(_shimCreator.CreateConstructorShim(constructor));
