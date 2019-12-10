@@ -80,5 +80,7 @@ namespace Testing.TestClasses
         }
 
         public string PublicProperty3 => "let's see here";
+
+        internal string PublicProperty4 => "a test of internals";
     }
 }
