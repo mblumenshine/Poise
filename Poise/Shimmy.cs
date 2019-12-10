@@ -66,6 +66,16 @@ namespace Poise
             return new Shimmy(shimmyInternals);
         }
 
+        public Shim GetShim(string name)
+        {
+            var count = _shimmyInternals.Count(x => x.Name == name);
+
+            if (count > 1) throw new MultipleShimsFoundException();
+            if (count < 1) throw new ShimNotFoundException();
+
+            return _shimmyInternals.FirstOrDefault(x => x.Name == name)?.Shim;
+        }
+
         public Shim GetShim(string name, bool isSetter = false, params Type[] types)
         {
             var shim = _shimmyInternals.Where(x => x.IsSetter == isSetter).FirstOrDefault(x => IsCorrectShim(x, name, types))?.Shim;
@@ -79,7 +89,9 @@ namespace Poise
         {
             if (shimmyInternal.Name != name) return false;
 
-            return types.Any(type => !shimmyInternal.Types.Any(x => x != type));
+            if (types.Length != shimmyInternal.Types.Count) return false;
+
+            return types.SequenceEqual(shimmyInternal.Types.ToArray());
         }
 
         internal IEnumerable<Shim> GetShims() => _shimmyInternals.Select(x => x.Shim);
