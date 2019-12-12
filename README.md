@@ -46,9 +46,15 @@ Note that if you're already using this despite it being in alpha, bear in mind t
 
     _frameworkShims.Add(
         Shim.Replace(() => Is.A<IEnumerable<string>>().FirstOrDefault(Is.A<Func<string, bool>>()))
-                    .With((IEnumerable<string> @this, Func<string, bool> func) => @this.FirstOrDefault(func))
+            .With((IEnumerable<string> @this, Func<string, bool> func) => @this.FirstOrDefault(func))
     );
     
 Where IEnumerable<string> above would be whatever your data type is, and whatever it's type argument is would need to match the "Func<string," portion of the other arguments. 
+    
+Any framework shims you require are then passed as a third argument to Poise.Run, ie:
+
+        Poise.Run(() => ClassUnderTest.TestMeThough(), _shimmyCollection, _frameworkShims);
+        
+With framework shims, make sure you are using the exact same overload that you need in your code under test! An example would be string.Format and its various versions.
 
 
