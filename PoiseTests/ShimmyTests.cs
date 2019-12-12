@@ -18,7 +18,7 @@ namespace PoiseTests
         {
             var test = string.Empty;
 
-            var testShimmy = Shimmy.CreateShimmy<ShimMe>(typeof(ShimMe));
+            var testShimmy = Shimmy.CreateShimmy<ShimMe>(typeof(ShimMe), true);
             // var iEnumerableShimmy = Shimmy.CreateShimmy<IEnumerable<string>>(typeof(IEnumerable<string>));
 
             // iEnumerableShimmy.GetShim(nameof(IEnumerable<string>.GetEnumerator)).With()
@@ -33,17 +33,16 @@ namespace PoiseTests
             //    .With((string replacement, object[] args) => string.Format(replacement, args));
             //var otherOtherFrameworkShim = Shim.Replace(() => string.Format(Is.A<string>(), Is.A<object>()))
             //    .With((string replacement, object args) => string.Format(replacement, args));
-            var otherOtherOtherFrameworkShim = Shim.Replace(() => string.Format(Is.A<string>(), Is.A<object>(), Is.A<object>()), false)//, new List<Type>() {typeof(string), typeof(object), typeof(int)})
+            var otherOtherOtherFrameworkShim = Shim.Replace(() => string.Format(Is.A<string>(), Is.A<object>(), Is.A<object>()), false)
                 .With((string replacement, object args, object otherArg) =>
                 {
-                    return string.Format(replacement, args, Convert.ToInt32(otherArg).ToString());
+                    return string.Format(replacement, args, otherArg);
                 });
 
-            var otherRealShim = testShimmy.GetShim("get_PublicProperty");
+           // var otherRealShim = testShimmy.GetShim("get_PublicProperty");
 
-            Poise.Poise.Run(() => {
-                test = DontShimMe.TestMeThough();
-            }, new List<Shimmy> { testShimmy }, new List<Shim>() { newFrameworkShim, otherOtherOtherFrameworkShim });//, iEnumerableShimmy });
+           Poise.Poise.Run(() => { test = DontShimMe.TestMeThough(); }, new List<Shimmy> {testShimmy},
+               new List<Shim>() {newFrameworkShim,otherOtherOtherFrameworkShim});//otherOtherOtherFrameworkShim });//, iEnumerableShimmy });
 
             Debug.WriteLine(test);
         }

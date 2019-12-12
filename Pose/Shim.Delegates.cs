@@ -78,9 +78,9 @@ namespace Pose
 
         public Shim With<TResult>(Func<TResult> replacement, bool isAuto = false) => WithImpl(replacement, isAuto);
 
-        public Shim With<T1, TResult>(Func<T1, TResult> replacement) => WithImpl(replacement);
+        public Shim With<T1, TResult>(Func<T1, TResult> replacement, bool isAuto = false) => WithImpl(replacement, isAuto);
 
-        public Shim With<T1, TResult>(FuncRef<T1, TResult> replacement) => WithImpl(replacement);
+        public Shim With<T1, TResult>(FuncRef<T1, TResult> replacement, bool isAuto = false) => WithImpl(replacement, isAuto);
 
         public Shim With<T1, T2, TResult>(Func<T1, T2, TResult> replacement) => WithImpl(replacement);
 

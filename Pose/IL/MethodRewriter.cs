@@ -45,11 +45,6 @@ namespace Pose.IL
 
             DynamicMethod dynamicMethod = new DynamicMethod(string.Format("dynamic_{0}_{1}", _method.DeclaringType, _method.Name),returnType,parameterTypes.ToArray(),StubHelper.GetOwningModule(),true);
 
-            if (_method.ToString() == "System.Resources.ResourceSet GetFirstResourceSet(System.Globalization.CultureInfo)")
-            {
-                var hello = "dave";
-            }
-            //")
 
             MethodDisassembler disassembler = new MethodDisassembler(_method);
             MethodBody methodBody = _method.GetMethodBody();
@@ -77,32 +72,10 @@ namespace Pose.IL
             foreach (var local in locals)
                 ilGenerator.DeclareLocal(local.LocalType, local.IsPinned);
 
-            IList<Instruction> ifTargetsFirst = new List<Instruction>();
-            IList<Instruction> ifTargetsSecond = new List<Instruction>();
-
-            foreach (var instruction in instructions)
-            {
-                if ((instruction.Operand as Instruction) != null)
-                    ifTargetsFirst.Add(instruction);
-            }
-
-            foreach (var instruction in ifTargetsFirst)
-            {
-                if (!s_IgnoredOpCodes.Contains(instruction.OpCode) && !s_IgnoredOpCodes.Contains((instruction.Operand as Instruction).OpCode))
-                {
-                    ifTargetsSecond.Add(instruction.Operand as Instruction);
-                }
-            }
-
             var ifTargets = instructions
                 .Where(i => (i.Operand as Instruction) != null)
                 .Where(i => !s_IgnoredOpCodes.Contains(i.OpCode))
                 .Select(i => (i.Operand as Instruction));
-
-            // ifTargets = ifTargetsSecond;
-            //.Where(i => !s_IgnoredOpCodes.Contains(i.OpCode))
-            //.Where(i => i.OpCode.Name != "leave" && i.OpCode.Name != "leave.s")
-            //ifTargets = ifTargetsSecond;
 
             foreach (Instruction instruction in ifTargets)
                 targetInstructions.TryAdd(instruction.Offset, ilGenerator.DefineLabel());
@@ -175,8 +148,6 @@ namespace Pose.IL
             return dynamicMethod;
         }
 
-        private int _totalExceptionCount = 0;
-        private int _catchExceptionCount = 0;
         private void EmitILForExceptionHandlers(ILGenerator ilGenerator, Instruction instruction, List<ExceptionHandler> handlers)
         {
             int catchBlockCount = 0;
@@ -188,14 +159,12 @@ namespace Pose.IL
                         continue;
 
                     ilGenerator.BeginExceptionBlock();
-                    ++_totalExceptionCount;
                     catchBlockCount++;
                     //break;
                     continue;
                 }
 
                 ilGenerator.BeginExceptionBlock();
-                ++_totalExceptionCount;
             }
 
             foreach (var handler in handlers.Where(h => h.HandlerEnd == instruction.Offset)) //|| (h.HandlerEnd == instruction.Offset - 1 && instruction.OpCode == OpCodes.Ret)))
@@ -210,7 +179,6 @@ namespace Pose.IL
                     continue;
                 }
 
-                //if (instruction.OpCode != OpCodes.Endfinally && instruction.OpCode != OpCodes.Ret) return;
                 ilGenerator.EndExceptionBlock();
             }
 
@@ -221,13 +189,9 @@ namespace Pose.IL
 
                 else if (handler.Flag == "Finally")
                 {
-                    //ilGenerator.EndExceptionBlock();
                     ilGenerator.BeginFinallyBlock();
-                    //return;
                 }
             }
-
-            
         }
 
         private void EmitILForInlineNone(ILGenerator ilGenerator, Instruction instruction)

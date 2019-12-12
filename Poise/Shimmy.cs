@@ -18,19 +18,14 @@ namespace Poise
             _shimmyInternals = shimmyInternals ?? throw new ArgumentNullException(nameof(shimmyInternals));
         }
 
-        public static Shimmy CreateShimmy<T>(Type type, ICreateShims shimCreator = null)
+        public static Shimmy CreateShimmy<T>(Type type, bool mockProperties = true, ICreateShims shimCreator = null)
         {
             shimCreator = shimCreator ?? new DefaultValueShimCreator();
 
-            // The reflection magic that will build up the shims from binding flags etc
             var staticMethods = type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly | BindingFlags.Static);
             var instanceMethods = type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly | BindingFlags.Instance);
             var properties = type.GetProperties();
             var constructors = type.GetConstructors();
-            //foreach (var constructor in constructors)
-            //{
-            //    _shims.Add(_shimCreator.CreateConstructorShim(constructor));
-            //}
             var shimmyInternals = new List<ShimmyInternal>();
             foreach (var method in staticMethods)
             {
@@ -39,6 +34,7 @@ namespace Poise
             }
             foreach (var method in instanceMethods)//.Where(m => !m.Name.StartsWith("get_") && !m.Name.StartsWith("set_")))
             {
+                if (!mockProperties && (method.Name.StartsWith("get_") || method.Name.StartsWith("set_"))) continue;
                 if (method.IsPublic || method.IsAssembly)
                     shimmyInternals.Add(new ShimmyInternal(method, shimCreator.CreatePublicInstanceShim<T>(method, type)));
             }
