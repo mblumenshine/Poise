@@ -22,7 +22,7 @@ There are a couple optional parameters for CreateShimmy
 
 Finally, to change the behavior of individual methods, you can get the underlying Shim and use .With by providing a lambda. The lambda must have the same parameters and return type as that which it is mocking. If instance, it also needs to have an initial parameter of the type of the class which contains the method:
 
-__Note of these are properties, append "get_" or "set_" per whatever you are changing the behavior of. A fix for this isn't difficult and on the roadmap__
+__Note: if these are properties, append "get\_" or "set\_" per whatever you are changing the behavior of. A fix for this isn't difficult and on the roadmap__
 
 __Note also that if the method is overloaded, there is an overloaded version of GetShim that accepts all the types, with the return type being last, in order to differentiate the different methods__
 
