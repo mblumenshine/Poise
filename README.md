@@ -1,3 +1,14 @@
+Roadmap:
+- Release nuget for new settings class and empty objects/strings work
+- Update readme to discuss settings class (and to be cleaned up generally)
+- Allow registering concrete type to enable returning empty (instead of null) abstract classes/interfaces.
+- Assembly scanning to grab any concrete type (for sake of unit tests, won't really matter which as long as it is mocked)
+- Cover Poise with unit tests
+- Clean up code base, as it's a mess
+- Update Pose unit tests with fixes made
+- Events?
+
+
 This is very much in alpha stage. There is a lot of cleanup that must be done and there will certainly be bugs to fix. More details (including a better readme/documentation) will be coming in the next few days (as of 12/12/19).
 
 Please do the right thing and follow proper SOLID principles (ie dependency injection). If you need this library while writing new code, I urge you to look into the aforementioned principles. If you're working with legacy systems, this library may help.
