@@ -9,6 +9,15 @@ namespace Poise.ShimCreators
 {
     internal class DefaultValueShimCreator : ICreateShims
     {
+        private bool _shouldReturnEmptyObjects;
+        private bool _shouldReturnEmptyStrings;
+
+        public DefaultValueShimCreator(bool shouldReturnEmptyObjects, bool shouldReturnEmptyStrings)
+        {
+            _shouldReturnEmptyObjects = shouldReturnEmptyObjects;
+            _shouldReturnEmptyStrings = shouldReturnEmptyStrings;
+        }
+
         public Shim CreateConstructorShim<T>(ConstructorInfo constructorInfo, Type type)
         {
             return Shim.ReplaceAuto(constructorInfo, type).With(() => (T)FormatterServices.GetUninitializedObject(type), true);
@@ -39,7 +48,7 @@ namespace Poise.ShimCreators
             return GetReturnTypeDelegate<T>(Shim.ReplaceAuto(methodInfo, type), returnType);
         }
 
-        private static Shim GetReturnTypeDelegate<T>(Shim shim, Type returnType)
+        private Shim GetReturnTypeDelegate<T>(Shim shim, Type returnType)
         {
             if (returnType.IsValueType)
             {
@@ -88,13 +97,15 @@ namespace Poise.ShimCreators
             return Shim.ReplaceAuto(methodInfo).With(() => GetDefault(returnType), true);
         }
 
-        private static object GetDefault(Type type)
+        private object GetDefault(Type type)
         {
+            if (type == typeof(string) && _shouldReturnEmptyStrings) return string.Empty;
+
             if (type.IsValueType)
             {
                 return Activator.CreateInstance(type);
             }
-            return null;
+            return _shouldReturnEmptyObjects && !type.IsAbstract && !type.IsInterface ? FormatterServices.GetUninitializedObject(type) : null;
         }
     }
 }

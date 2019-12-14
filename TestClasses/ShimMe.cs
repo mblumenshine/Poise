@@ -35,6 +35,11 @@ namespace Testing.TestClasses
             return text;
         }
 
+        public ShimMeDependency PublicInstanceReturnsDependency()
+        {
+            return new ShimMeDependency();
+        }
+
         public static void PublicStatic()
         {
             var text = "PublicStatic";

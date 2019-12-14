@@ -18,7 +18,7 @@ namespace PoiseTests
         {
             var test = string.Empty;
 
-            var testShimmy = Shimmy.CreateShimmy<ShimMe>(typeof(ShimMe), true);
+            var testShimmy = Shimmy.CreateShimmy<ShimMe>(typeof(ShimMe), new ShimmySettings());
             // var iEnumerableShimmy = Shimmy.CreateShimmy<IEnumerable<string>>(typeof(IEnumerable<string>));
 
             // iEnumerableShimmy.GetShim(nameof(IEnumerable<string>.GetEnumerator)).With()
@@ -38,11 +38,16 @@ namespace PoiseTests
                 {
                     return string.Format(replacement, args, otherArg);
                 });
+            var moreFrameworkShim = Shim.Replace(() => string.Format(Is.A<string>(), Is.A<object>()), false)
+                .With((string replacement, object arg) =>
+                {
+                    return string.Format(replacement, arg);
+                });
 
-           // var otherRealShim = testShimmy.GetShim("get_PublicProperty");
+            // var otherRealShim = testShimmy.GetShim("get_PublicProperty");
 
-           Poise.Poise.Run(() => { test = DontShimMe.TestMeThough(); }, new List<Shimmy> {testShimmy},
-               new List<Shim>() {newFrameworkShim,otherOtherOtherFrameworkShim});//otherOtherOtherFrameworkShim });//, iEnumerableShimmy });
+            Poise.Poise.Run(() => { test = DontShimMe.TestMeThough(); }, new List<Shimmy> {testShimmy},
+               new List<Shim>() {newFrameworkShim,otherOtherOtherFrameworkShim,moreFrameworkShim});//otherOtherOtherFrameworkShim });//, iEnumerableShimmy });
 
             Debug.WriteLine(test);
         }
