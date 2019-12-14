@@ -2,10 +2,12 @@ Roadmap:
 - Release nuget for new settings class and empty objects/strings work
 - Update readme to discuss settings class (and to be cleaned up generally)
 - Allow registering concrete type to enable returning empty (instead of null) abstract classes/interfaces.
+- Improving the GetShim method to remove the need for "get_" and "set_" prefixes when getting properties
 - Assembly scanning to grab any concrete type (for sake of unit tests, won't really matter which as long as it is mocked)
 - Cover Poise with unit tests
 - Clean up code base, as it's a mess
 - Update Pose unit tests with fixes made
+- Looking into automatic fix for the Pose workarounds that require creating shims for framework methods with lambdas that simply call themselves (like linq and string.format, see below)
 - Events?
 
 
