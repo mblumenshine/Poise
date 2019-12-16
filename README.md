@@ -1,5 +1,5 @@
 Roadmap:
-- Release nuget for new settings class and empty objects/strings work
+- Get collections to work, ie framework classes should be returned as they are and not uninitialized
 - Update readme to discuss settings class (and to be cleaned up generally)
 - Allow registering concrete type to enable returning empty (instead of null) abstract classes/interfaces.
 - Improving the GetShim method to remove the need for "get_" and "set_" prefixes when getting properties
