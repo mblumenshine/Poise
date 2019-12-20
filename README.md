@@ -1,4 +1,5 @@
 Roadmap:
+- Registering entire assemblies (AssemblyShimmies?)
 - Get collections to work, ie framework classes should be returned as they are and not uninitialized
 - Update readme to discuss settings class (and to be cleaned up generally)
 - Allow registering concrete type to enable returning empty (instead of null) abstract classes/interfaces.
@@ -6,6 +7,7 @@ Roadmap:
 - Assembly scanning to grab any concrete type (for sake of unit tests, won't really matter which as long as it is mocked)
 - Cover Poise with unit tests
 - Clean up code base, as it's a mess
+- Related to above, considering renaming
 - Update Pose unit tests with fixes made
 - Looking into automatic fix for the Pose workarounds that require creating shims for framework methods with lambdas that simply call themselves (like linq and string.format, see below)
 - Events?
