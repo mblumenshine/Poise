@@ -1,4 +1,5 @@
 Roadmap:
+- Need to fix shimming of value types (structs)
 - Registering entire assemblies (AssemblyShimmies?)
 - Get collections to work, ie framework classes should be returned as they are and not uninitialized
 - Update readme to discuss settings class (and to be cleaned up generally)
