@@ -1,6 +1,6 @@
 Roadmap:
 - (Critical: Try/Catch with many conditional statements fails to generate IL labels properly in VB, existing Pose issue)
-- (Critical: foreach doesn't work correctly: GetEnumerator needs to be shimmed. Need to think of a proper fix for this)
+- (Critical: foreach doesn't work correctly: GetEnumerator needs to be shimmed. Need to think of a proper fix for this as this is very tedious for something so ubiquitous)
 - Need to fix shimming of value types (structs)
 - Registering entire assemblies (AssemblyShimmies?)
 - Get collections to work, ie framework classes should be returned as they are and not uninitialized
@@ -74,5 +74,8 @@ Any framework shims you require are then passed as a third argument to Poise.Run
         Poise.Run(() => ClassUnderTest.TestMeThough(), _shimmyCollection, _frameworkShims);
         
 With framework shims, make sure you are using the exact same overload that you need in your code under test! An example would be string.Format and its various versions.
+
+And lastly, any use of foreach needs a number of framework shims, as foreach under the hood uses enumerators. Simple examples of this:
+https://www.csharp-examples.net/foreach/
 
 
