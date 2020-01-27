@@ -14,13 +14,16 @@ namespace Pose.IL
     {
         private MethodBase _method;
         private static List<OpCode> s_IgnoredOpCodes;
+        private Instruction _lastInstruction;
+        private bool _wasLastInstructionConstrained;
+        private TypeInfo _lastType;
 
         private MethodRewriter()
         {
             s_IgnoredOpCodes = new List<OpCode>
             {
-                OpCodes.Leave,
-                OpCodes.Leave_S
+               // OpCodes.Leave,
+               // OpCodes.Leave_S
             };
         }
 
@@ -99,6 +102,53 @@ namespace Pose.IL
 
                 if (targetInstructions.TryGetValue(instruction.Offset, out Label label))
                     ilGenerator.MarkLabel(label);
+
+                // If a constrained instruction is a prefix for an interface, we know any value types 
+                // must have implemented the interface explicitly, and thus both the constrained and
+                // callvirt instructions can be replaced by a simple call instruction.
+                // This is necessary as Invoking methods by reflection doesn't seem to work the same way as the CLR which
+                // replaces constrained/callvirt pairs to simple calls on the type itself, and the fact that it doesn't do this
+                // seems to break Pose and the calls to Method.Invoke
+                if (instruction.OpCode == OpCodes.Constrained)
+                {
+                    _lastInstruction = instruction;
+                    _wasLastInstructionConstrained = true;
+                    _lastType = instruction.Operand as TypeInfo;
+
+                    continue;
+                }
+                if (_wasLastInstructionConstrained)
+                {
+                    _wasLastInstructionConstrained = false;
+                    if (instruction.OpCode == OpCodes.Callvirt)
+                    {
+                        // emit Nops for constrained call (size is 6)
+                        // TODO: Get size from actual offset difference and emit that number of nops... though constrained is always 6 and very unlikely to change
+                        EmitILNop(ilGenerator);
+                        EmitILNop(ilGenerator);
+                        EmitILNop(ilGenerator);
+                        EmitILNop(ilGenerator);
+                        EmitILNop(ilGenerator);
+                        EmitILNop(ilGenerator);
+
+                        // change operand and continue
+                        var currentMethodInfo = instruction.Operand as MethodInfo;
+                        var replacementMethodInfo = _lastType.GetMethod(currentMethodInfo.Name);
+
+                        EmitILForMethod(ilGenerator, instruction, replacementMethodInfo, true);
+
+                        continue;
+                    }
+
+                    EmitILForInlineMember(ilGenerator, _lastInstruction);
+
+                    _lastInstruction = null;
+                    _lastType = null;
+                }
+                else
+                {
+                    _wasLastInstructionConstrained = false;
+                }
 
                 switch (instruction.OpCode.OperandType)
                 {
@@ -196,6 +246,8 @@ namespace Pose.IL
 
         private void EmitILForInlineNone(ILGenerator ilGenerator, Instruction instruction)
             => ilGenerator.Emit(instruction.OpCode);
+
+        private void EmitILNop(ILGenerator ilGenerator) => ilGenerator.Emit(OpCodes.Nop);
 
         private void EmitILForInlineI(ILGenerator ilGenerator, Instruction instruction)
             => ilGenerator.Emit(instruction.OpCode, (int)instruction.Operand);
@@ -315,7 +367,7 @@ namespace Pose.IL
             PoseContext.StubCache.TryAdd(constructorInfo, stub);
         }
 
-        private void EmitILForMethod(ILGenerator ilGenerator, Instruction instruction, MemberInfo memberInfo)
+        private void EmitILForMethod(ILGenerator ilGenerator, Instruction instruction, MemberInfo memberInfo, bool overrideVirtual = false)
         {
             MethodInfo methodInfo = memberInfo as MethodInfo;
             if (PoseContext.StubCache.TryGetValue(methodInfo, out DynamicMethod stub))
@@ -335,7 +387,7 @@ namespace Pose.IL
 
             if (instruction.OpCode == OpCodes.Call || instruction.OpCode == OpCodes.Callvirt)
             {
-                stub = instruction.OpCode == OpCodes.Call ?
+                stub = instruction.OpCode == OpCodes.Call || overrideVirtual ?
                     Stubs.GenerateStubForMethod(methodInfo) : Stubs.GenerateStubForVirtualMethod(methodInfo);
                 ilGenerator.Emit(OpCodes.Ldtoken, methodInfo);
                 ilGenerator.Emit(OpCodes.Ldtoken, methodInfo.DeclaringType);
