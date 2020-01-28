@@ -1,11 +1,16 @@
 Roadmap:
-- Release nuget for new settings class and empty objects/strings work
+- (Critical: Try/Catch with many conditional statements fails to generate IL labels properly in VB, existing Pose issue)
+- (Critical: foreach doesn't work correctly: GetEnumerator needs to be shimmed. Need to think of a proper fix for this as this is very tedious for something so ubiquitous)
+- Need to fix shimming of value types (structs)
+- Registering entire assemblies (AssemblyShimmies?)
+- Get collections to work, ie framework classes should be returned as they are and not uninitialized
 - Update readme to discuss settings class (and to be cleaned up generally)
 - Allow registering concrete type to enable returning empty (instead of null) abstract classes/interfaces.
 - Improving the GetShim method to remove the need for "get_" and "set_" prefixes when getting properties
 - Assembly scanning to grab any concrete type (for sake of unit tests, won't really matter which as long as it is mocked)
 - Cover Poise with unit tests
 - Clean up code base, as it's a mess
+- Related to above, considering renaming
 - Update Pose unit tests with fixes made
 - Looking into automatic fix for the Pose workarounds that require creating shims for framework methods with lambdas that simply call themselves (like linq and string.format, see below)
 - Events?
@@ -69,5 +74,8 @@ Any framework shims you require are then passed as a third argument to Poise.Run
         Poise.Run(() => ClassUnderTest.TestMeThough(), _shimmyCollection, _frameworkShims);
         
 With framework shims, make sure you are using the exact same overload that you need in your code under test! An example would be string.Format and its various versions.
+
+And lastly, any use of foreach needs a number of framework shims, as foreach under the hood uses enumerators. Simple examples of this:
+https://www.csharp-examples.net/foreach/
 
 
