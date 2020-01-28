@@ -22,8 +22,8 @@ namespace Pose.IL
         {
             s_IgnoredOpCodes = new List<OpCode>
             {
-               // OpCodes.Leave,
-               // OpCodes.Leave_S
+                OpCodes.Leave,
+                //OpCodes.Leave_S
             };
         }
 
