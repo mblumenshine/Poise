@@ -1,6 +1,6 @@
 Roadmap:
 - (Critical: Try/Catch with many conditional statements fails to generate IL labels properly in VB, existing Pose issue)
-- (Critical: foreach doesn't work correctly: GetEnumerator needs to be shimmed. Need to think of a proper fix for this as this is very tedious for something so ubiquitous)
+- ~~(Critical: foreach doesn't work correctly: GetEnumerator needs to be shimmed. Need to think of a proper fix for this as this is very tedious for something so ubiquitous)
 - Need to fix shimming of value types (structs)
 - Registering entire assemblies (AssemblyShimmies?)
 - Get collections to work, ie framework classes should be returned as they are and not uninitialized
