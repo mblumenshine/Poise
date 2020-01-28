@@ -22,7 +22,7 @@ namespace Pose.IL
         {
             s_IgnoredOpCodes = new List<OpCode>
             {
-                OpCodes.Leave,
+                //OpCodes.Leave,
                 //OpCodes.Leave_S
             };
         }
@@ -120,7 +120,7 @@ namespace Pose.IL
                 if (_wasLastInstructionConstrained)
                 {
                     _wasLastInstructionConstrained = false;
-                    if (instruction.OpCode == OpCodes.Callvirt)
+                    if (instruction.OpCode == OpCodes.Callvirt && ((instruction.Operand as MethodInfo)?.DeclaringType?.IsInterface ?? false))
                     {
                         // emit Nops for constrained call (size is 6)
                         // TODO: Get size from actual offset difference and emit that number of nops... though constrained is always 6 and very unlikely to change
